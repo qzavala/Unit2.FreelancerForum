@@ -1,5 +1,5 @@
-const colors = ["red", "green", "blue"];
-const sizes = ["small", "medium", "large"];
+const  names = ["bob", "chris", "evan"];
+const occupations = ["artist", "driver", "bartender"];
 
 const freeLanceWriters = [
   {
@@ -18,6 +18,8 @@ const freeLanceWriters = [
     startingPrice: 70,
   },
 ]
+const addFreeLancerIntervalId = setInterval(addFreeLancer, 1000);
+
 render();
 function render() {
 //   function render() {
@@ -37,24 +39,37 @@ function render() {
     //   return element;
     });
     freeLancer.replaceChildren(...template);
-
+    
+    const average = document.querySelector("#averageCost");
+average.innerText = getAveragePrice()
     // TODO: Render the circles
   }
 
 
-  function addShape() {
-    const color = colors[Math.floor(Math.random() * colors.length)];
-    const size = sizes[Math.floor(Math.random())]
+  function addFreeLancer() {
+    const name = names[Math.floor(Math.random() * names.length)];
+    const occupation = occupations[Math.floor(Math.random() * occupations.length)];
+    const price = Math.floor(Math.random() * 100);
   
     // TODO: Randomize the size of the shape
   
-    shapes.push({ color, size });
+    freeLanceWriters.push({ name, occupation, startingPrice:price });
   
     render();
-    
-  if (shapes.length === maxShapes){
-    clearInterval(addShapeIntervalId);
+
+  if (freeLanceWriters.length === 10){
+    clearInterval(addFreeLancerIntervalId);
   }
     // TODO: Stop adding shapes if we've reached the maximum number of shapes
   }
-  
+   function getAveragePrice()
+{
+    const initialValue = 0;
+    const totalPrice = freeLanceWriters.reduce(
+      (accumulator, freeLancer) => accumulator + freeLancer.startingPrice
+      ,
+      initialValue
+    );
+    return (totalPrice/freeLanceWriters.length).toFixed(2);
+    
+}  
